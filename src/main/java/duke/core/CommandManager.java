@@ -91,10 +91,13 @@ public class CommandManager {
                 }
             case "update":
                 try {
-                    String[] descriptions = command[1].split("\\s+");
-                    int targetId = Integer.parseInt(descriptions[1]);
-                    String targetInfo = descriptions[2];
-                    String updateValue = descriptions[3];
+                    String[] descriptions = command[2].split("\\s+");
+                    int targetId = Integer.parseInt(descriptions[0]);
+                    System.out.println(targetId);
+                    String targetInfo = descriptions[1];
+                    System.out.println(targetInfo);
+                    String updateValue = descriptions[2];
+                    System.out.println(updateValue);
 
                     return new UpdatePatientCommand(targetId, targetInfo, updateValue);
 
