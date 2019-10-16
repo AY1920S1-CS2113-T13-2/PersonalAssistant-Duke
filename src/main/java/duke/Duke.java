@@ -10,6 +10,8 @@ import duke.storage.TaskStorage;
 import duke.relation.PatientTaskList;
 import duke.task.TaskManager;
 import duke.core.Ui;
+import javafx.application.Application;
+
 
 /**
  * Represents Duke, a Personal Assistant to help
@@ -35,13 +37,14 @@ public class Duke {
      * A Ui object that deals with interactions with the user.
      */
     private Ui ui = Ui.getUi();
+
+    public Duke() {}
     /**
      * Constructs a Duke object with a relative file path.
      * Initialize the user interface and reads tasks from the specific text file.
      * @param filePath A string that represents the path of the local file
      *          used for storing tasks.
      */
-
     public Duke(String filePath) {
         taskStorage = new TaskStorage(filePath + "/standardTasks.csv");
         patientStorage = new PatientStorage(filePath + "/patients.csv");
@@ -82,6 +85,14 @@ public class Duke {
     }
 
     /**
+     * You should have your own function to generate a response to user input.
+     * Replace this stub with your completed method.
+     */
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
+    }
+
+    /**
      * Starts the Duke thread and Reminder thread concurrently
      * by passing a filepath to duke and a global ui object&
      * task list to Reminder.
@@ -91,4 +102,5 @@ public class Duke {
     public static void main(String[] args) {
         new Duke("./data").run();
     }
+
 }

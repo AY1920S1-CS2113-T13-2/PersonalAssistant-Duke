@@ -3,14 +3,25 @@ plugins {
     id 'application'
     id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
 }
-
-group 'duke'
-version '0.1.0'
 
 checkstyle {
     toolVersion = '8.23'
 }
+
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0'
+    compile "org.apache.commons:commons-csv:1.7"
+    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
 
 shadowJar {
     archiveBaseName = "mid"
@@ -19,15 +30,9 @@ shadowJar {
     archiveAppendix = null
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0'
-    compile "org.apache.commons:commons-csv:1.7"
-    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
-}
 
-test {
-    useJUnitPlatform()
-}
+group 'duke'
+version '0.1.0'
 
 repositories {
     mavenCentral()
@@ -35,9 +40,20 @@ repositories {
 
 application {
     // Change this to your main class.
-    mainClassName = "duke/Duke"
+    mainClassName = "duke.Duke"  // Use this when want to test in CLI mode
+    //mainClassName = "duke.Launcher" // Use this when want to test in GUI mode
 }
 
 run {
     standardInput = System.in
 }
+
+
+test {
+    useJUnitPlatform()
+}
+
+
+
+
+
