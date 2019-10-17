@@ -18,10 +18,10 @@ public class AddStandardTaskCommand extends Command{
     }
 
     @Override
-    public void execute(PatientTaskList patientTask, TaskManager taskList, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
+    public String execute(PatientTaskList patientTask, TaskManager taskList, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
         taskList.addTask(newStandardTask);
         taskStorage.save(taskList.getTaskList());
-        ui.taskAdded(newStandardTask);
+        return ui.taskAddedGui(newStandardTask);
     }
 
     @Override

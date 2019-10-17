@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class ListTasksCommand extends Command {
     @Override
-    public void execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
+    public String execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
         ArrayList<Task> list = tasks.getTaskList();
-        ui.listAllTasks(list);
+        return ui.listAllTasksGui(list);
     }
 
     @Override

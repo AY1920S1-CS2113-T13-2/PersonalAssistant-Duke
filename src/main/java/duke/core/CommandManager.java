@@ -33,8 +33,8 @@ public class CommandManager {
                     else {
                         throw new DukeException("Add command fails. ");
                     }
-            case "assign":
-                    return new AssignTaskToPatientCommand(parser.parseAssign());
+//            case "assign":
+//                    return new AssignTaskToPatientCommand(parser.parseAssign());
             case "list":
                 try {
                     String[] tempCommand = command[1].split("\\s+");
@@ -50,62 +50,62 @@ public class CommandManager {
                 } catch (Exception e) {
                     throw new DukeException("List command fails. " + e.getMessage());
                 }
-            case "delete":
-                try{
-                    secondKeyword = command[1].toLowerCase();
-                    if (secondKeyword.equals("patient")) {
-                        String formattedInput = parser.parseDeletePatient();
-                        return new DeletePatientCommand(formattedInput);
-                    }
-                    else if (secondKeyword.equals("task")){
-                        return new DeleteTaskCommand(parser.parseDeleteTask());
-                    }
-                    else {
-                        throw new Exception("Invalid format. ");
-                    }
-                } catch(Exception e){
-                    throw new DukeException("Delete command fails. " + e.getMessage());
-                }
-            case "find":
-                try{
-                    secondKeyword = command[1].toLowerCase();
-                    if (secondKeyword.equals("patient")){
-                        try {
-                            return new FindPatientCommand(command[2]);
-                        }catch(Exception e){
-                            throw new Exception("Please follow the format 'find patient #<id>' or 'find patient <name>'.");
-                        }
-                    }
-                    else if (secondKeyword.equals("patienttask")){
-                        try {
-                            return new FindPatientTaskCommand(command[2]);
-                        }catch(Exception e){
-                            throw new Exception("Please follow the format 'find patient #<id>' or 'find patient <name>'.");
-                        }
-                    }
-                    else {
-                        throw new Exception("Invalid format. ");
-                    }
-                } catch(Exception e){
-                    throw new DukeException("Find command fails. " + e.getMessage());
-                }
-            case "update":
-                try {
-                    secondKeyword = command[1].toLowerCase();
-                    if (secondKeyword.equals("patient")){
-                        String formattedInput = parser.parseUpdatePatient();
-                        return new UpdatePatientCommand(formattedInput);
-                    }
-                    else if (secondKeyword.equals("task")){
-                        String formattedInput = parser.parseUpdateTask();
-                        return new UpdateTaskCommand(formattedInput);
-                    }
-                    else {
-                        throw new Exception("Invalid format. ");
-                    }
-                } catch (Exception e) {
-                    throw new DukeException("update command fails. " + e.getMessage());
-                }
+//            case "delete":
+//                try{
+//                    secondKeyword = command[1].toLowerCase();
+//                    if (secondKeyword.equals("patient")) {
+//                        String formattedInput = parser.parseDeletePatient();
+//                        return new DeletePatientCommand(formattedInput);
+//                    }
+//                    else if (secondKeyword.equals("task")){
+//                        return new DeleteTaskCommand(parser.parseDeleteTask());
+//                    }
+//                    else {
+//                        throw new Exception("Invalid format. ");
+//                    }
+//                } catch(Exception e){
+//                    throw new DukeException("Delete command fails. " + e.getMessage());
+//                }
+//            case "find":
+//                try{
+//                    secondKeyword = command[1].toLowerCase();
+//                    if (secondKeyword.equals("patient")){
+//                        try {
+//                            return new FindPatientCommand(command[2]);
+//                        }catch(Exception e){
+//                            throw new Exception("Please follow the format 'find patient #<id>' or 'find patient <name>'.");
+//                        }
+//                    }
+//                    else if (secondKeyword.equals("patienttask")){
+//                        try {
+//                            return new FindPatientTaskCommand(command[2]);
+//                        }catch(Exception e){
+//                            throw new Exception("Please follow the format 'find patient #<id>' or 'find patient <name>'.");
+//                        }
+//                    }
+//                    else {
+//                        throw new Exception("Invalid format. ");
+//                    }
+//                } catch(Exception e){
+//                    throw new DukeException("Find command fails. " + e.getMessage());
+//                }
+//            case "update":
+//                try {
+//                    secondKeyword = command[1].toLowerCase();
+//                    if (secondKeyword.equals("patient")){
+//                        String formattedInput = parser.parseUpdatePatient();
+//                        return new UpdatePatientCommand(formattedInput);
+//                    }
+//                    else if (secondKeyword.equals("task")){
+//                        String formattedInput = parser.parseUpdateTask();
+//                        return new UpdateTaskCommand(formattedInput);
+//                    }
+//                    else {
+//                        throw new Exception("Invalid format. ");
+//                    }
+//                } catch (Exception e) {
+//                    throw new DukeException("update command fails. " + e.getMessage());
+//                }
             case "bye":
                 return new ExitCommand();
             default:

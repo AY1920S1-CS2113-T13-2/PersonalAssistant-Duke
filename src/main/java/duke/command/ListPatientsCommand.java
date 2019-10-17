@@ -19,9 +19,9 @@ public class ListPatientsCommand extends Command {
     }
 
     @Override
-    public void execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
+    public String execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException {
         ArrayList<Patient> list = patientList.getPatientList();
-        ui.listAllPatients(list);
+        return ui.listAllPatientsGui(list);
     }
 
     @Override

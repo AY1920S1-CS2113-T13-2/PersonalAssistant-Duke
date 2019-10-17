@@ -40,7 +40,7 @@ public class ExitCommand extends Command {
      * @param  patientList object that handles local text file update
      */
 
-    public void execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage){
-        ui.exitInformation();
+    public String execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage){
+        return ui.exitInformationGui();
     }
 }

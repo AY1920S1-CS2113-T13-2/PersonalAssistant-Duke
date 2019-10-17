@@ -16,7 +16,7 @@ import duke.core.Ui;
  */
 public abstract class Command {
 
-    public abstract void execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException;
+    public abstract String execute(PatientTaskList patientTask, TaskManager tasks, PatientManager patientList, Ui ui, PatientTaskStorage patientTaskStorage, TaskStorage taskStorage, PatientStorage patientStorage) throws DukeException;
     /**
      * Decide whether duke should exist.
      *

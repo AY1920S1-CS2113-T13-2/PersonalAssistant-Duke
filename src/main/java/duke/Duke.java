@@ -35,6 +35,8 @@ public class Duke {
      * A Ui object that deals with interactions with the user.
      */
     private Ui ui = Ui.getUi();
+
+    public Duke(){}
     /**
      * Constructs a Duke object with a relative file path.
      * Initialize the user interface and reads tasks from the specific text file.
@@ -79,6 +81,16 @@ public class Duke {
             }
         }
         System.exit(0);
+    }
+
+    /**
+     * You should have your own function to generate a response to user input.
+     * Replace this stub with your completed method.
+     */
+    public String getResponse(String Input) throws DukeException {
+        Command c = CommandManager.manageCommand(Input);
+        String output = c.execute(patientTaskList,taskManager,patientManager, ui, patientTaskStorage, taskStorage, patientStorage);
+        return output;
     }
 
     /**
