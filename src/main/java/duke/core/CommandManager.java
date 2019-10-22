@@ -35,7 +35,7 @@ public class CommandManager {
                 userInput = possibleCommand;
             }
         }
-        String[] command = userInput.toLowerCase().split("/");
+        String[] command = userInput.toLowerCase().split(":");
         String keyWord = command[0].trim();
 
         Parser parser = new Parser(userInput);

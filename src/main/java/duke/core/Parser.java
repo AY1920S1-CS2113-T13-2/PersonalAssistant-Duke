@@ -14,7 +14,7 @@ public class Parser {
     public Parser(String userInput) throws DukeException {
         this.userInput = userInput.trim();
         try {
-            parsedInput = userInput.split("/");
+            parsedInput = userInput.split(":");
         } catch (Exception e) {
             throw new DukeException("Could not parse user input!");
         }
@@ -39,7 +39,7 @@ public class Parser {
             return formattedOutput;
         } catch (Exception e) {
             throw new DukeException("Please follow the  "
-                    + "`add patient /<patient name> /<NRIC> /<patient room> /<patient_remark>` "
+                    + "`add patient :<patient name> :<NRIC> :<patient room> :<patient_remark>` "
                     + "format.");
         }
     }
@@ -58,7 +58,7 @@ public class Parser {
         try {
             formattedOutput = parsedInput[1].trim();
         } catch (Exception e) {
-            throw new DukeException("Please follow the `add task /<task description>`.");
+            throw new DukeException("Please follow the `add task :<task description>`.");
         }
         return formattedOutput;
     }
@@ -66,7 +66,7 @@ public class Parser {
     /**
      * Takes the user input and formats it so it is compatible with `assign standard task` commands.
      *
-     * `assign standard task` output: patient_task or #patient_id, #task_id, dateTime
+     * `assign standard task` output: patient_name or #patient_id, #task_id, dateTime
      *
      * @return A string of formatted output to be used by `assign standard task` command.
      * @throws DukeException Thrown when the user input cannot be parsed in the desired manner.
@@ -80,15 +80,15 @@ public class Parser {
             return formattedInput;
         } catch (Exception e) {
             throw new DukeException("Please follow the "
-                    + "`assign standard task /<patient name> or #<patient id> /#<task id> or <task name> "
-                    + "/<dd/MM/YYYY HHmm>` format.");
+                    + "`assign standard task :<patient name> or #<patient id> :#<task id> or <task name> "
+                    + ":<dd/MM/YYYY HHmm>` format.");
         }
     }
 
     /**
      * Takes the user input and formats it so it is compatible with `assign event task` command.
      *
-     * `assign event task` output: patient_task or #patient_id, #task_id, start_time, end_time
+     * `assign event task` output: patient_name or #patient_id, #task_id, start_time, end_time
      *
      * @return A string of formatted output to be used by `assign event task` command.
      * @throws DukeException Thrown when the user input cannot be parsed in the desired manner.
@@ -106,8 +106,8 @@ public class Parser {
             return formattedInput;
         } catch (Exception e) {
             throw new DukeException("Please follow the "
-                    + "`assign event task /<patient name> or #<patient id> /#<task ID> or <task name> "
-                    + "/<dd/MM/YYYY HHmm> to <dd/MM/YYYY HHmm>` format.");
+                    + "`assign event task :<patient name> or #<patient id> :#<task ID> or <task name> "
+                    + ":<dd/MM/YYYY HHmm> to <dd/MM/YYYY HHmm>` format.");
         }
     }
 
@@ -127,7 +127,7 @@ public class Parser {
             formattedInput = parsedInput[1].trim();
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please follow the `delete patient /<patient name> or #<patient id>` format");
+            throw new DukeException("Please follow the `delete patient :<patient name> or #<patient id>` format");
         }
     }
 
@@ -145,7 +145,7 @@ public class Parser {
             formattedInput = parsedInput[1].trim();
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please follow the `delete task /<task name> or #<task id>` format");
+            throw new DukeException("Please follow the `delete task :<task name> or #<task id>` format");
         }
     }
 
@@ -164,8 +164,8 @@ public class Parser {
             formattedInput[1] = parsedInput[2].trim();
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please follow the `delete patient task /<patient name> or #<patient id>"
-                    + " /<task name> or #<task id>` format.");
+            throw new DukeException("Please follow the `delete patient task :<patient name> or #<patient id>"
+                    + " :<task name> or #<task id>` format.");
         }
     }
 
@@ -186,8 +186,8 @@ public class Parser {
             }
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please use the `update patient /<patient name> or #<patient id>"
-                    +"/<edited info type> /<updated info>` format.");
+            throw new DukeException("Please use the `update patient :<patient name> or #<patient id>"
+                    +"/<edited info type> :<updated info>` format.");
         }
     }
 
@@ -207,8 +207,8 @@ public class Parser {
             }
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please use the `update patient /<task name> or #<task id>"
-                    +" /<updated description>` format.");
+            throw new DukeException("Please use the `update patient :<task name> or #<task id>"
+                    +" :<updated description>` format.");
         }
     }
 
@@ -225,7 +225,7 @@ public class Parser {
             String formattedInput = parsedInput[1].trim();
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please use the `find patient /<patient name> or #<patient id>` format.");
+            throw new DukeException("Please use the `find patient :<patient name> or #<patient id>` format.");
         }
     }
 
@@ -242,7 +242,7 @@ public class Parser {
             String formattedInput = parsedInput[1].trim();
             return formattedInput;
         } catch (Exception e) {
-            throw new DukeException("Please use the `find patient tasks /<patient name> or #<patient id>` format.");
+            throw new DukeException("Please use the `find patient tasks :<patient name> or #<patient id>` format.");
         }
     }
 }
