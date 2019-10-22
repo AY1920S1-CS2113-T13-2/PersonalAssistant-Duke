@@ -35,74 +35,38 @@ public class CommandManager {
                 userInput = possibleCommand;
             }
         }
-        String[] command = userInput.toLowerCase().split("\\s+", 4);
-        String firstKeyword = command[0];
-        String secondKeyword = "";
-        String thirdKeyword = "";
-        if (command.length >= 2) {
-            secondKeyword = command[1];
-        }
-        if (command.length >= 3) {
-            thirdKeyword = command[2];
-
-        }
+        String[] command = userInput.toLowerCase().split("/");
+        String keyWord = command[0];
 
         Parser parser = new Parser(userInput);
 
-        switch (firstKeyword) {
-        case "add":
-            if (secondKeyword.equals("patient")) {
-                String[] formattedInput = parser.parseAdd();
-                AddPatientCommand addPatientCommand = new AddPatientCommand(formattedInput);
-                return addPatientCommand;
-            } else if (secondKeyword.equals("task")) {
-                String formattedInput = parser.parseAdd()[0];
-                AddStandardTaskCommand addStandardTaskCommand = new AddStandardTaskCommand(formattedInput);
-                return addStandardTaskCommand;
-            } else {
-                throw new DukeException("Add command fails.");
-            }
+        switch (keyWord) {
+        case "add patient":
+            AddPatientCommand addPatientCommand = new AddPatientCommand(parser.parseAddPatient());
+            return addPatientCommand;
+        case "add task":
+            AddStandardTaskCommand addStandardTaskCommand = new AddStandardTaskCommand(parser.parseAddTask());
+            return addStandardTaskCommand;
         case "assign":
             return new AssignTaskToPatientCommand(parser.parseAssign());
-        case "list":
-            String[] tempCommand = parser.parseList();
-            String nextKeyword = tempCommand[0].toLowerCase();
-            if (nextKeyword.equals("patients")) {
-                return new ListPatientsCommand();
-            } else if (nextKeyword.equals("tasks")) {
-                return new ListTasksCommand();
-            } else {
-                throw new DukeException("Invalid 'list' command.");
-            }
-        case "delete":
-            if (secondKeyword.equals("patient") && thirdKeyword.equals("task")) {
-                return new DeletePatientTaskCommand(parser.parseDeletePatientTask());
-            } else if (secondKeyword.equals("patient")) {
-                String formattedInput = parser.parseDeletePatient();
-                return new DeletePatientCommand(formattedInput);
-            } else if (secondKeyword.equals("task")) {
-                return new DeleteTaskCommand(parser.parseDeleteTask());
-            } else {
-                throw new DukeException("Invalid 'delete' command.");
-            }
-        case "find":
-            if (secondKeyword.equals("patient") && thirdKeyword.equals("task")) {
-                return new FindPatientTaskCommand(parser.parseFind());
-            } else if (secondKeyword.equals("patient")) {
-                return new FindPatientCommand(parser.parseFind());
-            }  else {
-                throw new DukeException("Invalid 'find' command.");
-            }
-        case "update":
-            if (secondKeyword.equals("patient")) {
-                String formattedInput = parser.parseUpdatePatient();
-                return new UpdatePatientCommand(formattedInput);
-            } else if (secondKeyword.equals("task")) {
-                String formattedInput = parser.parseUpdateTask();
-                return new UpdateTaskCommand(formattedInput);
-            } else {
-                throw new DukeException("Invalid 'update' command. ");
-            }
+        case "list patients":
+            return new ListPatientsCommand();
+        case "list tasks":
+            return new ListTasksCommand();
+        case "delete patient task":
+            return new DeletePatientTaskCommand(parser.parseDeletePatientTask());
+        case "delete patient":
+            return new DeletePatientCommand(parser.parseDeletePatient());
+        case "delete task":
+            return new DeleteTaskCommand(parser.parseDeleteTask());
+        case "find patient":
+            return new FindPatientCommand((parser.parseFind()));
+        case "find patient task":
+            return new FindPatientTaskCommand((parser.parseFind()));
+        case "update patient":
+            return new UpdatePatientCommand(parser.parseUpdatePatient());
+        case "update task":
+            return new UpdateTaskCommand(parser.parseUpdateTask());
         case "bye":
             ExitCommand exitCommand = new ExitCommand();
             return exitCommand;

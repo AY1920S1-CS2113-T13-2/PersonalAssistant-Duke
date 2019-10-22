@@ -3,6 +3,7 @@ package duke.core;
 public class Parser {
 
     String userInput;
+    String[] parsedInput;
 
     /**
      * Constructor for the Parser class.
@@ -10,33 +11,54 @@ public class Parser {
      * @param userInput Takes in user's raw input and stores it to use in its methods, parsing it
      *                  into a format that is appropriate for the command it invokes.
      */
-    public Parser(String userInput) {
-        this.userInput = userInput;
+    public Parser(String userInput) throws DukeException {
+        this.userInput = userInput.trim();
+        try {
+            parsedInput = userInput.split("/");
+        } catch (Exception e) {
+            throw new DukeException("Could not parse user input!");
+        }
     }
 
     /**
-     * Parses user input so that it is compatible with Add commands.
+     * Parses user input so that it is compatible with `add patient` command.
      *
-     * @return A formatted string that will work for the available 'add' commands.
+     *
+     * `add patient` output: patient_name, patient_NRIC, patient_room, patient_remark
+     *
+     * @return A formatted string that will work for the available `add patient` command.
      * @throws DukeException If the method is unable to parse the userInput correctly, it will throw
      *                       a DukeException.
      */
-    public String[] parseAdd() throws DukeException {
-        String[] parsedCommand = userInput.toLowerCase().split("\\s+", 3);
+    public String[] parseAddPatient() throws DukeException {
+        String[] formattedOutput = new String[4];
         try {
-            if (parsedCommand[1].equals("patient")) {
-                String[] patientInfo = userInput.replaceAll(
-                        "(?i)add patient ", "").trim().split("\\s+", 4);
-                return patientInfo;
-            } else if (parsedCommand[1].equals("task")) {
-                String[] taskInfo = new String[1];
-                taskInfo[0] = userInput.replaceAll("(?i)add task ", "").trim();
-                return taskInfo;
+            for (int i = 1; i < parsedInput.length; i++) {
+                formattedOutput[i-1] = parsedInput[i].trim();
             }
+            return formattedOutput;
         } catch (Exception e) {
-            throw new DukeException("Please change the format for your 'add' command.");
+            throw new DukeException("Please follow the `add patient /patient name /NRIC /patient room /patient_remark` format.");
         }
-        throw new DukeException("Invalid 'add' command.");
+    }
+
+    /**
+     * Parses user input so that it is compatible with `add task` command.
+     *
+     * `add task` output: task_description
+     *
+     * @return A formatted string that will work for the available `add task` command.
+     * @throws DukeException If the method is unable to parse the userInput correctly, it will throw
+     *                       a DukeException.
+     */
+    public String parseAddTask() throws DukeException {
+        String formattedOutput;
+        try {
+            formattedOutput = parsedInput[1];
+        } catch (Exception e) {
+            throw new DukeException("Please follow the `add task /task description`.");
+        }
+        return formattedOutput;
     }
 
     /**
