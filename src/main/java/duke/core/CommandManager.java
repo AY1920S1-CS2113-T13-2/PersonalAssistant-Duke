@@ -36,7 +36,7 @@ public class CommandManager {
             }
         }
         String[] command = userInput.toLowerCase().split("/");
-        String keyWord = command[0];
+        String keyWord = command[0].trim();
 
         Parser parser = new Parser(userInput);
 
@@ -47,8 +47,10 @@ public class CommandManager {
         case "add task":
             AddStandardTaskCommand addStandardTaskCommand = new AddStandardTaskCommand(parser.parseAddTask());
             return addStandardTaskCommand;
-        case "assign":
-            return new AssignTaskToPatientCommand(parser.parseAssign());
+        case "assign standard task":
+            return new AssignTaskToPatientCommand(parser.parseAssignStandardTask());
+        case "assign event task":
+            return new AssignTaskToPatientCommand(parser.parseAssignEventTask());
         case "list patients":
             return new ListPatientsCommand();
         case "list tasks":
@@ -60,9 +62,9 @@ public class CommandManager {
         case "delete task":
             return new DeleteTaskCommand(parser.parseDeleteTask());
         case "find patient":
-            return new FindPatientCommand((parser.parseFind()));
-        case "find patient task":
-            return new FindPatientTaskCommand((parser.parseFind()));
+            return new FindPatientCommand((parser.parseFindPatient()));
+        case "find patient tasks":
+            return new FindPatientTaskCommand((parser.parseFindPatientTask()));
         case "update patient":
             return new UpdatePatientCommand(parser.parseUpdatePatient());
         case "update task":
