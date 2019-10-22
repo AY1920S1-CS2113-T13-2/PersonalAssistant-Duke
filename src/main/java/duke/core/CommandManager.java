@@ -1,3 +1,4 @@
+//@@lmtaek
 package duke.core;
 
 import duke.command.AddPatientCommand;
@@ -62,7 +63,7 @@ public class CommandManager {
         case "find patient":
             return new FindPatientCommand((parser.parseFindPatient()));
         case "find patient tasks":
-            return new FindPatientTaskCommand((parser.parseFindPatientTask()));
+            return new FindPatientTaskCommand((parser.parseFindPatientTasks()));
         case "update patient":
             return new UpdatePatientCommand(parser.parseUpdatePatient());
         case "update task":

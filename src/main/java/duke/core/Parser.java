@@ -1,3 +1,4 @@
+//@@lmtaek
 package duke.core;
 
 public class Parser {
@@ -65,7 +66,7 @@ public class Parser {
     /**
      * Takes the user input and formats it so it is compatible with `assign standard task` commands.
      * <p>
-     * `assign standard task` output: patient_name or #patient_id, #task_id, dateTime
+     * `assign standard task` output: patient_name or #patient_id, task_name or #task_id, dateTime
      *
      * @return A string of formatted output to be used by `assign standard task` command.
      * @throws DukeException Thrown when the user input cannot be parsed in the desired manner.
@@ -87,7 +88,7 @@ public class Parser {
     /**
      * Takes the user input and formats it so it is compatible with `assign event task` command.
      * <p>
-     * `assign event task` output: patient_name or #patient_id, #task_id, start_time, end_time
+     * `assign event task` output: patient_name or #patient_id, task_name or #task_id, start_time, end_time
      *
      * @return A string of formatted output to be used by `assign event task` command.
      * @throws DukeException Thrown when the user input cannot be parsed in the desired manner.
@@ -235,7 +236,7 @@ public class Parser {
      * @return A string of formatted output to be used by 'find patient task' command.
      * @throws DukeException Thrown when the user input cannot be parsed in the desired manner.
      */
-    public String parseFindPatientTask() throws DukeException {
+    public String parseFindPatientTasks() throws DukeException {
         try {
             String formattedInput = parsedInput[1].trim();
             return formattedInput;
