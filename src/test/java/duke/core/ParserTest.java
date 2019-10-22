@@ -1,6 +1,7 @@
 package duke.core;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParserTest {
@@ -27,7 +28,7 @@ public class ParserTest {
         assertTrue(desiredOutput.length == testOutput.length);
         for (int i = 0; i < desiredOutput.length; i++) {
             assertTrue(desiredOutput[i].equals(testOutput[i]), "Parsing failed. Expected: "
-            + desiredOutput[i] + " but got: " + testOutput[i]);
+                    + desiredOutput[i] + " but got: " + testOutput[i]);
         }
     }
 

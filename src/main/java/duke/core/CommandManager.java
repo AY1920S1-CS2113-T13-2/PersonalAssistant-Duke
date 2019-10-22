@@ -22,10 +22,10 @@ import duke.command.UpdateTaskCommand;
 public class CommandManager {
 
     /**
-     * Parses a Task from a string array.
+     * Decides which command to execute based on keywords available in the user's input.
      *
-     * @param userInput The string array to be parsed.
-     * @return The Command received from user.
+     * @param userInput The user's input.
+     * @return The command dictated by the user.
      */
     public static Command manageCommand(String userInput) throws DukeException {
         userInput = userInput.trim();
@@ -42,11 +42,9 @@ public class CommandManager {
 
         switch (keyWord) {
         case "add patient":
-            AddPatientCommand addPatientCommand = new AddPatientCommand(parser.parseAddPatient());
-            return addPatientCommand;
+            return new AddPatientCommand(parser.parseAddPatient());
         case "add task":
-            AddStandardTaskCommand addStandardTaskCommand = new AddStandardTaskCommand(parser.parseAddTask());
-            return addStandardTaskCommand;
+            return new AddStandardTaskCommand(parser.parseAddTask());
         case "assign standard task":
             return new AssignTaskToPatientCommand(parser.parseAssignStandardTask());
         case "assign event task":
@@ -73,7 +71,7 @@ public class CommandManager {
             ExitCommand exitCommand = new ExitCommand();
             return exitCommand;
         default:
-            throw new DukeException("Could not understand user input");
+            throw new DukeException("Could not understand user input.");
         }
     }
 }
