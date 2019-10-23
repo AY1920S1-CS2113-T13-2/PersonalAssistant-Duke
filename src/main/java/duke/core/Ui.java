@@ -459,7 +459,8 @@ public class Ui {
      * @param patients       list of patients relate to task
      */
     public void taskPatientFound(Task task, ArrayList<PatientTask> patientTask, ArrayList<Patient> patients) {
-        System.out.println("The task " + task.getID() + " " + task.getDescription() + " assigned to following patient(s) is/are found : \n");
+        System.out.println("The task " + task.getID() + " " + task.getDescription()
+                + " assigned to following patient(s) is/are found : \n");
         for (int i = 0; i < patientTask.size(); i++) {
             showLine();
             System.out.println(patients.get(i).getID() + ". " + patients.get(i).getName() + "\n");
