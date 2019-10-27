@@ -22,6 +22,16 @@ public class Parser {
         }
     }
 
+    public String[] parseUserInput() {
+        int outputLength = parsedInput.length - 1;
+        String[] formattedInput = new String[outputLength];
+
+        for (int i = 1; i <= formattedInput.length; i++) {
+            formattedInput[i-1] = parsedInput[i];
+        }
+        return formattedInput;
+    }
+
     /**
      * Parses user input so that it is compatible with `add patient` command.
      * `add patient` output: patient_name, patient_NRIC, patient_room, patient_remark
