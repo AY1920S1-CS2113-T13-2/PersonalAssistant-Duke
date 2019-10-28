@@ -15,9 +15,9 @@ import duke.command.FindPatientCommand;
 import duke.command.FindPatientTaskCommand;
 import duke.command.ListPatientsCommand;
 import duke.command.ListTasksCommand;
+import duke.command.UndoCommand;
 import duke.command.UpdatePatientCommand;
 import duke.command.UpdateTaskCommand;
-import duke.command.UndoCommand;
 
 /**
  * Represents a Parser that parses user input into a specific
@@ -108,7 +108,8 @@ public class CommandManager {
             try {
                 return new FindPatientTaskCommand(parser.parseUserInput()[0]);
             } catch (Exception e) {
-                throw new DukeException("Please use the `find assigned tasks :<patient name> or #<patient id>` format.");
+                throw new DukeException("Please use the `find assigned tasks "
+                        + ":<patient name> or #<patient id>` format.");
             }
         case "update patient":
             try {
@@ -128,7 +129,7 @@ public class CommandManager {
             return new DukeCommand();
         case "bye":
             return new ExitCommand();
-        case "undo" :
+        case "undo":
             return new UndoCommand();
         default:
             throw new DukeException("Could not understand user input.");

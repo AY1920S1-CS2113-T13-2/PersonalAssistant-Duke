@@ -12,7 +12,7 @@ public class ParserTest {
     String taskDummyInput = "add task :Walk the dog";
 
     String assignPatientToDeadlineTask = "assign deadline task :patient name :#2 :02/02/2002 2222";
-    String assignPatientToEventTask = "assign event task :#2 :#1 :01/02/2003 1234 to 06/05/2004 2312";
+    String assignPatientToPeriodTask = "assign period task :#2 :#1 :01/02/2003 1234 :06/05/2004 2312";
 
     String deletePatientInputWithID = "delete patient :#123";
     String deletePatientInputWithName = "delete patient :billy joe";
@@ -33,7 +33,7 @@ public class ParserTest {
     public void parseAddPatientTest() throws DukeException {
         Parser testParser = new Parser(patientDummyInput);
         String[] desiredOutput = {"name", "NRIC", "room", "remark"};
-        String[] testOutput = testParser.parseAddPatient();
+        String[] testOutput = testParser.parseUserInput();
 
         assertTrue(desiredOutput.length == testOutput.length);
         for (int i = 0; i < desiredOutput.length; i++) {
@@ -45,22 +45,22 @@ public class ParserTest {
     @Test
     public void parseAddTask() throws DukeException {
         Parser testParser = new Parser(taskDummyInput);
-        String testOutput = testParser.parseAddTask();
+        String testOutput = testParser.parseUserInput()[0];
 
         assertTrue(testOutput.equals("Walk the dog"),
                 "Task description did not parse correctly. Expected 'Walk the dog' but got: " + testOutput);
     }
 
     @Test
-    public void parseAssignDeadlineAndEventTasks() throws DukeException {
+    public void parseAssignDeadlineAndPeriodTasks() throws DukeException {
         Parser testParserDeadline = new Parser(assignPatientToDeadlineTask);
-        Parser testParserEvent = new Parser(assignPatientToEventTask);
+        Parser testParserPeriod = new Parser(assignPatientToPeriodTask);
 
-        final String[] testDeadlineOutput = testParserDeadline.parseAssignDeadlineTask();
-        final String[] testEventOutput = testParserEvent.parseAssignEventTask();
+        final String[] testDeadlineOutput = testParserDeadline.parseUserInput();
+        final String[] testPeriodOutput = testParserPeriod.parseUserInput();
 
         String[] desiredDeadlineOutput = {"patient name", "#2", "02/02/2002 2222"};
-        String[] desiredEventOutput = {"#2", "#1", "01/02/2003 1234", "06/05/2004 2312"};
+        String[] desiredPeriodOutput = {"#2", "#1", "01/02/2003 1234", "06/05/2004 2312"};
 
         assertTrue(desiredDeadlineOutput.length == testDeadlineOutput.length);
         for (int i = 0; i < desiredDeadlineOutput.length; i++) {
@@ -68,10 +68,10 @@ public class ParserTest {
                     + desiredDeadlineOutput[i] + " but got: " + testDeadlineOutput[i]);
         }
 
-        assertTrue(desiredEventOutput.length == testEventOutput.length);
-        for (int i = 0; i < desiredEventOutput.length; i++) {
-            assertTrue(desiredEventOutput[i].equals(testEventOutput[i]), "Parsing failed. Expected: "
-                    + desiredEventOutput[i] + " but got: " + testEventOutput[i]);
+        assertTrue(desiredPeriodOutput.length == testPeriodOutput.length);
+        for (int i = 0; i < desiredPeriodOutput.length; i++) {
+            assertTrue(desiredPeriodOutput[i].equals(testPeriodOutput[i]), "Parsing failed. Expected: "
+                    + desiredPeriodOutput[i] + " but got: " + testPeriodOutput[i]);
         }
     }
 
@@ -80,8 +80,8 @@ public class ParserTest {
         Parser testParserID = new Parser(deletePatientInputWithID);
         Parser testParserName = new Parser(deletePatientInputWithName);
 
-        String testOutputID = testParserID.parseDeletePatient();
-        String testOutputName = testParserName.parseDeletePatient();
+        String testOutputID = testParserID.parseUserInput()[0];
+        String testOutputName = testParserName.parseUserInput()[0];
 
         assertTrue(testOutputID.charAt(0) == '#' && testOutputID.equals("#123"),
                 "Delete patient by ID parsing failed. Expected '#123' but got: " + testOutputID);
@@ -94,8 +94,8 @@ public class ParserTest {
         Parser testParserID = new Parser(deleteTaskInputWithID);
         Parser testParserName = new Parser(deleteTaskInputWithName);
 
-        String testOutputID = testParserID.parseDeleteTask();
-        String testOutputName = testParserName.parseDeleteTask();
+        String testOutputID = testParserID.parseUserInput()[0];
+        String testOutputName = testParserName.parseUserInput()[0];
 
         assertTrue(testOutputID.charAt(0) == '#' && testOutputID.equals("#10"),
                 "Delete task by ID parsing failed. Expected '#10' but got: " + testOutputID);
@@ -106,7 +106,7 @@ public class ParserTest {
     @Test
     public void parseDeleteAssignedTask() throws DukeException {
         Parser testParserID = new Parser(deleteAssignedTaskInputWithID);
-        String[] testOutputID = testParserID.parseDeleteAssignedTask();
+        String[] testOutputID = testParserID.parseUserInput();
         String[] desiredOutputID = {"#2", "#5"};
 
         assertTrue(desiredOutputID.length == testOutputID.length);
@@ -116,7 +116,7 @@ public class ParserTest {
         }
 
         Parser testParserName = new Parser(deleteAssignedTaskInputWithName);
-        String[] testOutputName = testParserName.parseDeleteAssignedTask();
+        String[] testOutputName = testParserName.parseUserInput();
         String[] desiredOutputName = {"patient name", "task name"};
         assertTrue(desiredOutputName.length == testOutputName.length);
         for (int i = 0; i < desiredOutputName.length; i++) {
@@ -125,7 +125,7 @@ public class ParserTest {
         }
 
         Parser testParserUniqueID = new Parser(deleteAssignedTaskInputWithUniqueID);
-        String[] testOutputUniqueID = testParserUniqueID.parseDeleteAssignedTask();
+        String[] testOutputUniqueID = testParserUniqueID.parseUserInput();
         String[] desiredOutputUniqueID = {"%3"};
         assertTrue(desiredOutputUniqueID[0].equals(testOutputUniqueID[0]), "Parsing failed. Expected: "
                 + desiredOutputUniqueID[0] + " but got: " + testOutputUniqueID[0]);
@@ -135,7 +135,7 @@ public class ParserTest {
     @Test
     public void parseUpdatePatientTest() throws DukeException {
         Parser testParser = new Parser(updatePatientInput);
-        String[] testOutput = testParser.parseUpdatePatient();
+        String[] testOutput = testParser.parseUserInput();
         String[] desiredOutput = {"name", "field", "new data"};
 
         assertTrue(desiredOutput.length == testOutput.length);
@@ -149,7 +149,7 @@ public class ParserTest {
     @Test
     public void parseUpdateTaskTest() throws DukeException {
         Parser testParser = new Parser(updateTaskInput);
-        String[] testOutput = testParser.parseUpdateTask();
+        String[] testOutput = testParser.parseUserInput();
         String[] desiredOutput = {"task name", "new description"};
 
         assertTrue(desiredOutput.length == testOutput.length);
@@ -162,14 +162,14 @@ public class ParserTest {
     @Test
     public void parseFindPatientTest() throws DukeException {
         Parser testParserID = new Parser(findPatientInputWithID);
-        String testOutputID = testParserID.parseFindPatient();
+        String testOutputID = testParserID.parseUserInput()[0];
         String desiredOutputID = "#200";
 
         assertTrue(desiredOutputID.equals(testOutputID), "Parsing failed. Expected: "
                 + desiredOutputID + " but got: " + testOutputID);
 
         Parser testParserName = new Parser(findPatientInputWithName);
-        String testOutputName = testParserName.parseFindPatient();
+        String testOutputName = testParserName.parseUserInput()[0];
         String desiredOutputName = "name";
 
         assertTrue(desiredOutputName.equals(testOutputName), "Parsing failed. Expected: "
@@ -180,7 +180,7 @@ public class ParserTest {
     @Test
     public void parseFindAssignedTasksTest() throws DukeException {
         Parser testParser = new Parser(findAssignedTasksInput);
-        String testOutput = testParser.parseFindAssignedTasks();
+        String testOutput = testParser.parseUserInput()[0];
         String desiredOutput = "jane doe";
 
         assertTrue(desiredOutput.equals(testOutput), "Parsing failed. Expected: "
